@@ -8,6 +8,16 @@ const api = axios.create({
   }
 });
 
+
+
+const api2 = axios.create({
+  baseURL: API_BASE_URL,
+  headers: {
+    'Content-Type': 'application/x-www-form-urlencoded'
+  }
+});
+
+
 export const authAPI = {
 
   registerUser: async (credentials) => {
@@ -18,14 +28,14 @@ export const authAPI = {
 
   login: async (credentials) => {
     try {
-      const response = await api.post('/auth/login', credentials);
-      const { token } = response.data;
+      const response = await api.post('/token', credentials);
+      const { access_token  } = response.data;
       
-      if (token) {
-        localStorage.setItem('token', token);
+      if (access_token ) {
+        localStorage.setItem('token', access_token);
         return { 
           success: true, 
-          token 
+          access_token  
         };
       }
       throw new Error('No token received');

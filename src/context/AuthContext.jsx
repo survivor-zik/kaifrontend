@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(false);
 
       setTimeout(() => {
-        toast.warn("Authentication required!")   
+        toast.error("Authentication required!")   
       }, 3000);
       setIsLoading(false);
       return;

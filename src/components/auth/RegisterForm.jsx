@@ -12,11 +12,11 @@ const RegisterForm = () => {
     formState: { errors }
   } = useForm({
     defaultValues: {
-      firstName: '',
-      lastName: '',
+      // firstName: '',
+      // lastName: '',
       email: '',
       password: '',
-      confirmPassword: ''
+      // confirmPassword: ''
     }
   });
   const navigate = useNavigate();
@@ -78,7 +78,7 @@ const RegisterForm = () => {
           </h2>
 
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="flex gap-4">
+            {/* <div className="flex gap-4">
               <div className="flex-1">
                 <input
                   {...register('firstName', {
@@ -114,7 +114,7 @@ const RegisterForm = () => {
                   </p>
                 )}
               </div>
-            </div>
+            </div> */}
 
             <div>
               <input
@@ -160,7 +160,7 @@ const RegisterForm = () => {
               )}
             </div>
 
-            <div>
+            {/* <div>
               <input
                 {...register('confirmPassword', {
                   required: 'Please confirm your password',
@@ -178,7 +178,7 @@ const RegisterForm = () => {
                   {errors.confirmPassword.message}
                 </p>
               )}
-            </div>
+            </div> */}
 
             <p className="mt-4 text-center text-gray-600">
               Already have an account?{' '}

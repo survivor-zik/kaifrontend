@@ -11,7 +11,7 @@ const LoginForm = () => {
     formState: { errors } 
   } = useForm({
     defaultValues: {
-      email: '',
+      username: '',
       password: ''
     }
   });
@@ -68,7 +68,7 @@ const LoginForm = () => {
 
             <div>
               <input
-                {...register('email', {
+                {...register('username', {
                   required: 'Email is required',
                   pattern: {
                     value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
