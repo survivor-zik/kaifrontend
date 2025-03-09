@@ -1,4 +1,3 @@
-// Frontend: src/components/Chat.jsx
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import { Button } from "../ui/Button";
