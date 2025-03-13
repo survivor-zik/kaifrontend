@@ -9,15 +9,33 @@ const ApiKeysPage = () => {
   const [showGeneratedKey, setShowGeneratedKey] = useState(false);
   const [keyName, setKeyName] = useState('');
   const [generatedKey, setGeneratedKey] = useState('');
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const [isLoading, setIsLoading] = useState(false)
+  
+
   useEffect(() => {
-    fetchApiKeys();
+    const fetchData = async () => {
+      try {
+        await new Promise(resolve => setTimeout(resolve, 100));
+        await fetchApiKeys();
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setLoading(false);
+      }
+    };
+    
+    fetchData();
   }, []);
 
   const fetchApiKeys = async () => {
     try {
-      setLoading(true);
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setLoading(false);
+        return;
+      }
+      
       const response = await apiKeysAPI.getAllKeys();
       setApiKeys(response);
       setLoading(false);
@@ -26,6 +44,7 @@ const ApiKeysPage = () => {
       setLoading(false);
     }
   };
+
 
   const handleCreateKey = async () => {
     try {

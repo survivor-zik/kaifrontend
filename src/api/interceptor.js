@@ -1,6 +1,19 @@
 import axios from 'axios';
 import { API_BASE_URL } from './config';
-import { toast } from 'react-toastify';
+import { toast } from 'sonner';
+
+
+
+useEffect(() => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    api3.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } else {
+    delete api3.defaults.headers.common['Authorization'];
+  }
+}, [isAuthenticated]);
+
+
 
 const api = axios.create({
   baseURL: API_BASE_URL,

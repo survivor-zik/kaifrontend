@@ -1,14 +1,11 @@
-import axios from 'axios';
-import { API_BASE_URL } from './config';
 import { api3 } from './interceptor';
 export const apiKeysAPI = {
   getAllKeys: async () => {
-    try {
-      const response = await api3.get('/api-keys');
-      return response.data;
-    } catch (error) {
-      throw error.response?.data || error.message;
-    }
+    const token = localStorage.getItem('token');
+    const headers = { Authorization: `Bearer ${token}` };
+    
+    const response = await api3.get('/api/keys', { headers });
+    return response.data;
   },
   createKey: async (name) => {
     try {
