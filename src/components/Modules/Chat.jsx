@@ -334,6 +334,20 @@ const Chat = () => {
     }
   };
 
+  useEffect(() => {
+    if (descriptionInput !== "") {
+      setDescriptionResponse(""); 
+    }
+  }, [descriptionInput]);
+  
+  useEffect(() => {
+    if (cdtInput !== "") {
+      setCdtResponse(""); 
+    }
+  }, [cdtInput]);
+
+
+
   return (
     <div className="flex-1 bg-[#151515] text-white min-h-screen flex flex-col">
       <div className="w-full max-w-6xl mx-auto p-4 flex-1 flex flex-col">
@@ -356,10 +370,7 @@ const Chat = () => {
               </div>
               <textarea
                 value={descriptionResponse || descriptionInput}
-                onChange={(e) => {
-                  setDescriptionInput(e.target.value);
-                  setDescriptionResponse(""); 
-                }}
+                onChange={(e) => setDescriptionInput(e.target.value)} 
                 placeholder="Type or view description"
                 className="h-40 bg-transparent text-white resize-none focus:outline-none text-xl p-4"
                 disabled={isLoadingCdt}
@@ -388,10 +399,7 @@ const Chat = () => {
               </div>
               <textarea
                 value={cdtResponse || cdtInput}
-                onChange={() =>  { setCdtInput(e.target.value)
-                  setCdtResponse("");
-                }
-              }
+                onChange={(e) => setCdtInput(e.target.value)}
                 placeholder="Type or view CDT code"
                 className="h-40 bg-transparent text-white resize-none focus:outline-none text-xl p-4"
                 disabled={isLoadingDescription}
