@@ -1,18 +1,15 @@
 import axios from 'axios';
 import { API_BASE_URL } from './config';
+import { toast } from 'react-toastify';
 
 const api = axios.create({
   baseURL: API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json'
-  }
+  headers: { 'Content-Type': 'application/json' }
 });
 
 const api2 = axios.create({
   baseURL: API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
-  }
+  headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
 });
 
 const api3 = axios.create({
@@ -27,7 +24,6 @@ const handleLogout = () => {
     }, 2000);
 };
 
-
 const addAuthInterceptor = (axiosInstance, useBearer = false) => {
   axiosInstance.interceptors.request.use(
     (config) => {
@@ -35,6 +31,8 @@ const addAuthInterceptor = (axiosInstance, useBearer = false) => {
         const token = localStorage.getItem('token');
         if (token) {
           config.headers.Authorization = `Bearer ${token}`;
+        } else {
+          console.warn("No token found in localStorage!");
         }
       }
       return config;
@@ -45,8 +43,18 @@ const addAuthInterceptor = (axiosInstance, useBearer = false) => {
   axiosInstance.interceptors.response.use(
     (response) => response,
     (error) => {
-      if (error.response?.status === 401) {
-        handleLogout();
+      if (error.response) {
+        console.error("Axios Error Response:", error.response); 
+
+        if (error.response.status === 401) {
+          console.log("Detected 401 Unauthorized, triggering logout...");
+
+          if (error.response.data?.detail === "Could not validate credentials") {
+            handleLogout();
+          }
+        }
+      } else {
+        console.error("Network error or no response from server:", error);
       }
       return Promise.reject(error);
     }
