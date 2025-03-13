@@ -17,6 +17,7 @@ const ApiKeysPage = () => {
 
   const fetchApiKeys = async () => {
     try {
+      setLoading(true);
       const response = await apiKeysAPI.getAllKeys();
       setApiKeys(response);
       setLoading(false);
