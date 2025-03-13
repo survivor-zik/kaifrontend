@@ -96,27 +96,17 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
   const navigate = useNavigate();
-
-  const checkAuth = async () => {
+  
+  
+  
+  const checkAuth = () => {
     const token = localStorage.getItem('token');
-    if (!token) {
-      setIsAuthenticated(false);
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      const { valid } = await authAPI.verifyToken(token);
-      setIsAuthenticated(valid);
-    } catch (error) {
-      setIsAuthenticated(false);
-      localStorage.removeItem('token');
-    } finally {
-      setIsLoading(false);
-    }
+    setIsAuthenticated(!!token); 
+    setIsLoading(false);
   };
+
+
 
   useEffect(() => {
     checkAuth();
