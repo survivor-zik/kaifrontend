@@ -109,12 +109,12 @@ export const AuthProvider = ({ children }) => {
     const token = localStorage.getItem('token');
     if (!token) {
       setIsAuthenticated(false);
-      setTimeout(() => {
-        toast.warning("Authentication required!")   
-      }, 3000);
       setIsLoading(false);
+      
+      setTimeout(() => setError("Authentication required!"), 3000);
       return;
     }
+  
     try {
       const { valid } = await authAPI.verifyToken(token);
       setIsAuthenticated(valid);
@@ -145,6 +145,14 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+
+  useEffect(() => {
+    if (error) {
+      toast.warning(error);
+    }
+  }, [error]);
+
+  
   const logout = () => {
     authAPI.logout();
     setIsAuthenticated(false);
