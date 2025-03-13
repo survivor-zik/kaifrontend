@@ -33,11 +33,9 @@ function App() {
               <ProtectedRoute>
                 <div className="flex">
                   <Sidebar />
-                  <Routes>
-                    
+                  <Routes>  
                     <Route path="/apikeys" element={<ApiKeysPage />} />
                     <Route path='/chat' element={<Chat/>}/>
-                    <Route path="/" element={<Navigate to="/apikeys" />} />
                   </Routes>
                 </div>
               </ProtectedRoute>

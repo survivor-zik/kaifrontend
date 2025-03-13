@@ -356,7 +356,10 @@ const Chat = () => {
               </div>
               <textarea
                 value={descriptionResponse || descriptionInput}
-                onChange={(e) => setDescriptionInput(e.target.value)}
+                onChange={(e) => {
+                  setDescriptionInput(e.target.value);
+                  setDescriptionResponse(""); 
+                }}
                 placeholder="Type or view description"
                 className="h-40 bg-transparent text-white resize-none focus:outline-none text-xl p-4"
                 disabled={isLoadingCdt}
@@ -385,7 +388,10 @@ const Chat = () => {
               </div>
               <textarea
                 value={cdtResponse || cdtInput}
-                onChange={(e) => setCdtInput(e.target.value)}
+                onChange={() =>  { setCdtInput(e.target.value)
+                  setCdtResponse("");
+                }
+              }
                 placeholder="Type or view CDT code"
                 className="h-40 bg-transparent text-white resize-none focus:outline-none text-xl p-4"
                 disabled={isLoadingDescription}
