@@ -1,22 +1,6 @@
 import axios from 'axios';
 import { API_BASE_URL } from './config';
-
-const api = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/json'
-  }
-});
-
-
-
-const api2 = axios.create({
-  baseURL: API_BASE_URL,
-  headers: {
-    'Content-Type': 'application/x-www-form-urlencoded'
-  }
-});
-
+import { api , api2 } from './interceptor';
 
 export const authAPI = {
 
@@ -65,3 +49,4 @@ export const authAPI = {
     return { success: true };
   }
 };
+

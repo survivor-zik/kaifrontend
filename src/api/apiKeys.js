@@ -1,14 +1,10 @@
 import axios from 'axios';
 import { API_BASE_URL } from './config';
-
+import { api3 } from './interceptor';
 export const apiKeysAPI = {
   getAllKeys: async () => {
     try {
-      const response = await axios.get(`${API_BASE_URL}/api-keys`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
+      const response = await api3.get('/api-keys');
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
@@ -16,15 +12,7 @@ export const apiKeysAPI = {
   },
   createKey: async (name) => {
     try {
-      const response = await axios.post(
-        `${API_BASE_URL}/api-keys`,
-        { name },
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`,
-          },
-        }
-      );
+      const response = await api3.post('/api-keys', { name });
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
@@ -32,11 +20,7 @@ export const apiKeysAPI = {
   },
   deleteKey: async (keyId) => {
     try {
-      const response = await axios.delete(`${API_BASE_URL}/api-keys/${keyId}`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
-      });
+      const response = await api3.delete(`/api-keys/${keyId}`);
       return response.data;
     } catch (error) {
       throw error.response?.data || error.message;
