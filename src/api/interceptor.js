@@ -20,7 +20,7 @@ const api3 = axios.create({
 });
 
 const handleLogout = () => {
-    toast.warning("Authentication Required!");
+    toast.error("Authentication Required!");
     setTimeout(() => {
         localStorage.removeItem('token');
         window.location.href = '/login'; 

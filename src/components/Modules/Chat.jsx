@@ -296,6 +296,14 @@ const Chat = () => {
       });
 
       if (!response.ok) {
+        if (response.status === 401) {
+          toast.error("Session expired. Logging out...");
+          localStorage.removeItem("token"); 
+          setTimeout(() => {
+            toast.error("Authentication Required!");
+            window.location.href = "/login";
+          }, 1500);
+        }
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 
