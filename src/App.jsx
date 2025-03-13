@@ -20,28 +20,37 @@ const ProtectedRoute = ({ children }) => {
   return children;
 };
 
+
+
+function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/login" element={<LoginForm />} />
+      <Route path="/register" element={<RegisterForm />} />
+      <Route
+        path="/*"
+        element={
+          <ProtectedRoute>
+            <div className="flex">
+              <Sidebar />
+              <Routes>
+                <Route path="/apikeys" element={<ApiKeysPage />} />
+                <Route path="/chat" element={<Chat />} />
+              </Routes>
+            </div>
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
+  );
+}
+
+
 function App() {
   return (
     <Router>
       <AuthProvider>
-        <Routes>
-          <Route path="/login" element={<LoginForm />} />
-          <Route path='/register' element={<RegisterForm/>} /> 
-          <Route 
-            path="/*" 
-            element={
-              <ProtectedRoute>
-                <div className="flex">
-                  <Sidebar />
-                  <Routes>  
-                    <Route path="/apikeys" element={<ApiKeysPage />} />
-                    <Route path='/chat' element={<Chat/>}/>
-                  </Routes>
-                </div>
-              </ProtectedRoute>
-            } 
-          />
-        </Routes>
+        <AppRoutes />
       </AuthProvider>
     </Router>
   );

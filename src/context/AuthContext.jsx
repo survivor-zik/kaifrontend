@@ -86,14 +86,12 @@
 // };
 
 
-
-
 import { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { authAPI } from '../api/auth';
 import { Toaster, toast } from 'sonner';
+import { authAPI } from '../api/auth';
 
-const AuthContext = createContext({});
+const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -101,20 +99,14 @@ export const AuthProvider = ({ children }) => {
   const [error, setError] = useState(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    checkAuth();
-  }, []);
-
   const checkAuth = async () => {
     const token = localStorage.getItem('token');
     if (!token) {
       setIsAuthenticated(false);
       setIsLoading(false);
-      
-      setTimeout(() => setError("Authentication required!"), 3000);
       return;
     }
-  
+
     try {
       const { valid } = await authAPI.verifyToken(token);
       setIsAuthenticated(valid);
@@ -126,38 +118,36 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  useEffect(() => {
+    checkAuth();
+  }, []);
+
   const login = async (credentials) => {
     try {
       const result = await authAPI.login(credentials);
       if (result.success) {
-        toast.success("Login successful!")     
-        setTimeout(() => {
-          setIsAuthenticated(true);
-          navigate('/apikeys');
-        }, 2000);
+        toast.success("Login successful!");
+        setIsAuthenticated(true);
+        navigate('/apikeys');
       }
       return result;
     } catch (error) {
+      const errorMessage = error?.message || 'Login failed';
+      toast.error(errorMessage);
       return { 
         success: false, 
-        error: error.message || 'Login failed'
+        error: errorMessage
       };
     }
   };
 
-
-  useEffect(() => {
-    if (error) {
-      toast.warning(error);
-    }
-  }, [error]);
-
-  
   const logout = () => {
     authAPI.logout();
+    localStorage.clear();
     setIsAuthenticated(false);
     navigate('/login');
   };
+
   return (
     <AuthContext.Provider value={{
       isAuthenticated,
@@ -167,7 +157,7 @@ export const AuthProvider = ({ children }) => {
       logout
     }}>
       {children}
-      <Toaster visibleToasts={1} richColors position='bottom-center'/>
+      <Toaster richColors position="bottom-center" />
     </AuthContext.Provider>
   );
 };
