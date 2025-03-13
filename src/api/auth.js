@@ -21,14 +21,14 @@ const api2 = axios.create({
 export const authAPI = {
 
   registerUser: async (credentials) => {
-      const response = await api.post('/auth/register', credentials);
+      const response = await api.post('/user', credentials);
       return response;
     },
 
 
   login: async (credentials) => {
     try {
-      const response = await api.post('/token', credentials);
+      const response = await api2.post('/token', credentials);
       const { access_token  } = response.data;
       
       if (access_token ) {
@@ -47,18 +47,18 @@ export const authAPI = {
     }
   },
 
-  verifyToken: async (token) => {
-    try {
-      const response = await api.get('/auth/verify', {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      return { valid: true, user: response.data };
-    } catch (error) {
-      return { valid: false };
-    }
-  },
+  // verifyToken: async (token) => {
+  //   try {
+  //     const response = await api.get('/auth/verify', {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`
+  //       }
+  //     });
+  //     return { valid: true, user: response.data };
+  //   } catch (error) {
+  //     return { valid: false };
+  //   }
+  // },
 
   logout: () => {
     localStorage.removeItem('token');

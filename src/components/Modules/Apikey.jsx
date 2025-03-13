@@ -44,7 +44,7 @@ const ApiKeysPage = () => {
     } catch (error) {
       setIsLoading(false)
       toast.error("Failed to create API key!");
-      console.error('Failed to create API key:', error);
+      // console.error('Failed to create API key:', error);
     }
   };
 
@@ -104,11 +104,11 @@ const ApiKeysPage = () => {
             </tr>
           </thead>
           <tbody>
-            {apiKeys.map((key) => (
+            {apiKeys?.map((key) => (
               <tr key={key.id} className="border-b border-gray-700">
                 <td className="px-4 py-3 text-sm">{key.name}</td>
                 <td className="px-4 py-3 text-sm font-mono">
-                  {key.key.substring(0, 12)}...
+                  {key.key}
                 </td>
                 <td className="px-4 py-3 text-sm text-gray-400">
                   {new Date(key.created).toLocaleDateString()}
