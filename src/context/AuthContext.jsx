@@ -101,6 +101,13 @@ export const AuthProvider = ({ children }) => {
   
   
   const checkAuth = () => {
+    if(!token) 
+    {
+      toast.warning("Authentication Required!");
+      return;
+    }
+
+
     const token = localStorage.getItem('token');
     setIsAuthenticated(!!token); 
     setIsLoading(false);
@@ -142,7 +149,6 @@ export const AuthProvider = ({ children }) => {
     <AuthContext.Provider value={{
       isAuthenticated,
       isLoading,
-      error,
       login,
       logout
     }}>
