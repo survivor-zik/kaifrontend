@@ -1,19 +1,5 @@
 import axios from 'axios';
 import { API_BASE_URL } from './config';
-import { toast } from 'sonner';
-
-
-
-useEffect(() => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    api3.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-  } else {
-    delete api3.defaults.headers.common['Authorization'];
-  }
-}, [isAuthenticated]);
-
-
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -30,7 +16,6 @@ const api3 = axios.create({
 });
 
 const handleLogout = () => {
-    toast.error("Authentication Required!");
     setTimeout(() => {
         localStorage.removeItem('token');
         window.location.href = '/login'; 
@@ -77,5 +62,19 @@ const addAuthInterceptor = (axiosInstance, useBearer = false) => {
 addAuthInterceptor(api);  
 addAuthInterceptor(api2); 
 addAuthInterceptor(api3, true); 
+
+export const refreshAuthToken = () => {
+  const token = localStorage.getItem('token');
+  
+  if (token) {
+    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    api2.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    api3.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+  } else {
+    delete api.defaults.headers.common['Authorization'];
+    delete api2.defaults.headers.common['Authorization'];
+    delete api3.defaults.headers.common['Authorization'];
+  }
+};
 
 export { api, api2, api3 };

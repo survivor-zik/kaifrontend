@@ -300,7 +300,6 @@ const Chat = () => {
             toast.error("Session expired. Logging out...");
             localStorage.removeItem("token"); 
             setTimeout(() => {
-              toast.error("Authentication Required!");
               window.location.href = "/login";
             }, 1500);
           }

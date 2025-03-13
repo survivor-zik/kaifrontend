@@ -100,21 +100,23 @@ export const AuthProvider = ({ children }) => {
   
   
   
-  const checkAuth = () => {
+  const checkAuth = (showToast = false) => {
     const token = localStorage.getItem('token');
-    if(!token) 
-      {
-        toast.warning("Authentication Required!");
-        return;
-      }  
-    setIsAuthenticated(!!token); 
+    if(!token) {
+      setIsAuthenticated(false);
+      setIsLoading(false); 
+      if (showToast) {
+        toast.error("Authentication Required!");
+      }
+      return false;
+    }  
+    setIsAuthenticated(true); 
     setIsLoading(false);
+    return true;
   };
 
-
-
   useEffect(() => {
-    checkAuth();
+    checkAuth(false); 
   }, []);
 
   const login = async (credentials) => {
@@ -151,7 +153,7 @@ export const AuthProvider = ({ children }) => {
       logout
     }}>
       {children}
-      <Toaster richColors position="bottom-center" />
+      <Toaster richColors position="bottom-center" visibleToasts={1} />
     </AuthContext.Provider>
   );
 };
