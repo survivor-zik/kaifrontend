@@ -1,4 +1,3 @@
-
 import { api , api2 } from './interceptor';
 
 export const authAPI = {
