@@ -101,14 +101,12 @@ export const AuthProvider = ({ children }) => {
   
   
   const checkAuth = () => {
-    if(!token) 
-    {
-      toast.warning("Authentication Required!");
-      return;
-    }
-
-
     const token = localStorage.getItem('token');
+    if(!token) 
+      {
+        toast.warning("Authentication Required!");
+        return;
+      }  
     setIsAuthenticated(!!token); 
     setIsLoading(false);
   };
