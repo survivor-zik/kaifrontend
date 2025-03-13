@@ -1,3 +1,4 @@
+
 import { api , api2 } from './interceptor';
 
 export const authAPI = {
@@ -10,14 +11,14 @@ export const authAPI = {
 
   login: async (credentials) => {
     try {
-      const response = await api.post('/auth/login', credentials);
-      const { token  } = response.data;
+      const response = await api2.post('/token', credentials);
+      const { access_token  } = response.data;
       
-      if (token ) {
-        localStorage.setItem('token', token);
+      if (access_token ) {
+        localStorage.setItem('token', access_token);
         return { 
           success: true, 
-          token  
+          access_token  
         };
       }
       throw new Error('No token received');
